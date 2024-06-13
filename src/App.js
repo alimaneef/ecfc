@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { Container, Grid, Typography } from '@mui/material';
+import MovieCard from './components/MovieCard';
+import VideoPlayer from './components/VideoPlayer';
+import movies from './moviesData';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [selectedMovie, setSelectedMovie] = useState(null);
+
+    const handleMovieClick = (movie) => {
+        setSelectedMovie(movie);
+    };
+
+    return (
+        <Container>
+            <Typography variant="h3" align="center" gutterBottom>
+                PrimeVision
+            </Typography>
+            {selectedMovie ? (
+                <VideoPlayer movie={selectedMovie} />
+            ) : (
+                <Grid container spacing={4}>
+                    {movies.map((movie, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={index}>
+                            <MovieCard movie={movie} onClick={handleMovieClick} />
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
+        </Container>
+    );
 }
 
 export default App;
